@@ -1,0 +1,298 @@
+ADR-001: Padronização da infraestrutura com Docker e stack de observabilidade
+
+Status: Accepted
+
+Contexto:
+A aplicação precisa de um ambiente padronizado para desenvolvimento e futura escalabilidade.
+Também há necessidade de monitoramento, rastreamento de logs e suporte a comunicação assíncrona.
+
+A equipe busca:
+- Facilidade de setup local
+- Padronização entre ambientes (dev/prod)
+- Observabilidade da aplicação
+- Suporte a eventos (mensageria)
+
+Decisão:
+Será adotado o uso de Docker para orquestração dos serviços.
+
+A stack definida será:
+- PostgreSQL como banco de dados relacional
+- Keycloak para autenticação e autorização
+- Kafka para mensageria
+- Prometheus, Grafana e Loki para observabilidade
+- Configuração baseada em Spring Profiles, variáveis de ambiente e .env
+
+Consequências:
+
+Positivas:
+- Ambiente padronizado e replicável
+- Facilidade de onboarding de novos desenvolvedores
+- Monitoramento e logs centralizados
+- Suporte a arquitetura orientada a eventos
+
+Negativas:
+- Aumento da complexidade da infraestrutura
+- Necessidade de maior consumo de recursos localmente
+- Curva de aprendizado (Kafka, observabilidade, etc.)
+
+ADR-002: Uso de Keycloak com JWT para autenticação e autorização
+
+Status: Accepted
+
+Contexto:
+A aplicação precisa de um mecanismo padronizado de autenticação e autorização,
+permitindo controle de acesso baseado em usuários, roles e clients.
+
+Também é necessário suporte a tokens seguros para comunicação entre serviços.
+
+Decisão:
+Será adotado o Keycloak como provedor de identidade (IAM) para gerenciar usuários,
+roles e clients.
+
+A autenticação será baseada em tokens JWT, utilizados para transmitir informações
+de forma segura entre cliente e servidor.
+
+Consequências:
+
+Positivas:
+- Centralização da autenticação e autorização
+- Suporte a RBAC (controle por roles)
+- Integração fácil com aplicações via JWT
+- Redução de código customizado de segurança
+
+Negativas:
+- Aumento da complexidade da infraestrutura
+- Dependência de um serviço externo (Keycloak)
+- Curva de aprendizado para configuração e manutenção
+
+ADR-003: Uso de API Gateway para centralização de requisições
+
+Status: Accepted
+
+Contexto:
+A aplicação é composta por múltiplos serviços e necessita de um ponto único de entrada
+para gerenciar requisições, autenticação e roteamento.
+
+Também há necessidade de aplicar regras comuns como validação de tokens,
+rate limiting e logging de forma centralizada.
+
+Decisão:
+Será adotado um API Gateway utilizando Spring Cloud Gateway como ponto de entrada
+para todas as requisições externas.
+
+O gateway será responsável por:
+- Roteamento de requisições para os serviços internos
+- Validação de tokens JWT
+- Aplicação de filtros (logs, segurança, etc.)
+
+Consequências:
+
+Positivas:
+- Centralização da lógica de entrada (segurança, logs, validações)
+- Redução de código duplicado nos serviços
+- Maior controle sobre tráfego e requisições
+- Facilidade para implementar políticas como rate limiting
+
+Negativas:
+- Ponto único de falha se não houver redundância
+- Aumento de latência nas requisições
+- Maior complexidade na arquitetura
+
+ADR-004: Separação de domínio em serviços independentes
+
+Status: Accepted
+
+Contexto:
+A aplicação possui diferentes responsabilidades de negócio, como gerenciamento
+de clientes (Customer) e processamento de pedidos/casos (Order/Case).
+
+Há necessidade de organizar o sistema de forma escalável, desacoplada e de fácil manutenção.
+
+Decisão:
+O sistema será dividido em serviços independentes por domínio de negócio:
+
+- Customer Service: responsável por CRUD de clientes, health checks, métricas e migrações
+- Order/Case Service: responsável pelo fluxo principal da aplicação, com persistência própria
+
+Cada serviço terá sua própria responsabilidade e poderá evoluir de forma independente.
+
+Consequências:
+
+Positivas:
+- Separação clara de responsabilidades (baixo acoplamento)
+- Maior escalabilidade por serviço
+- Facilidade de manutenção e evolução
+- Times podem trabalhar de forma independente
+
+Negativas:
+- Maior complexidade na comunicação entre serviços
+- Necessidade de gerenciar múltiplos bancos/serviços
+- Possível consistência eventual entre dados
+- Overhead de infraestrutura
+
+ADR-005: Implementação de serviço de notificações assíncrono
+
+Status: Accepted
+
+Contexto:
+A aplicação possui eventos de domínio (ex: criação de pedido, atualização de status)
+que devem disparar notificações para usuários ou outros sistemas.
+
+Essas notificações não devem impactar o fluxo principal da aplicação,
+evitando aumento de latência e acoplamento entre serviços.
+
+Decisão:
+Será implementado um serviço de notificações assíncrono, responsável por consumir
+eventos publicados via Kafka.
+
+Esse serviço será desacoplado dos demais e terá como responsabilidade processar eventos
+de domínio e enviar notificações (ex: email, logs, futuras integrações).
+
+Consequências:
+
+Positivas:
+- Desacoplamento entre o fluxo principal e notificações
+- Não bloqueia requisições do usuário (melhor performance percebida)
+- Facilidade para adicionar novos tipos de notificação
+- Escalabilidade independente do serviço
+
+Negativas:
+- Complexidade adicional com mensageria (Kafka)
+- Possível atraso na entrega das notificações
+- Necessidade de lidar com falhas e reprocessamento de eventos
+- Maior dificuldade de debugging (fluxo assíncrono)
+
+ADR-006: Versionamento de banco de dados com Liquibase por microserviço
+
+Status: Accepted
+
+Contexto:
+A aplicação é composta por múltiplos microserviços, cada um responsável por seu próprio domínio.
+
+É necessário garantir controle de versão do banco de dados, rastreabilidade de mudanças
+e consistência entre ambientes (dev, staging, produção).
+
+Decisão:
+Cada microserviço terá seu próprio banco de dados isolado.
+
+O versionamento e controle de mudanças serão realizados utilizando Liquibase,
+com migrations versionadas e executadas automaticamente no startup da aplicação.
+
+Consequências:
+
+Positivas:
+- Isolamento completo de dados entre serviços
+- Histórico versionado das mudanças no banco
+- Facilidade de replicação de ambientes
+- Redução de conflitos entre equipes
+
+Negativas:
+- Maior complexidade na gestão de múltiplos bancos
+- Dificuldade em consultas que envolvem múltiplos serviços
+- Necessidade de lidar com consistência eventual entre dados
+- Overhead de manutenção das migrations
+
+ADR-007: Resiliencia dentro dos microservicos
+
+Status: Accepted
+
+Contexto:
+A aplicação é composta por múltiplos microserviços, utilizando resilience para ministra-los.
+
+É necessário garantir que a aplicacao continue funcionando mesmo se um microservico parar de funcionar
+para isso sera aplicado o resilience4j e aplicar o circuit breaker em servicos falhos.
+
+Decisão:
+a implementacao do resilience4j e essencial para a integridade da aplicacao.
+
+Consequências:
+
+Positivas:
+- circuit breaker cancela requisicoes para services falhos
+- timeout (define o prazo de espera para entregar a requisicao
+- retry tenta novamente apos erro
+- rate limiter (limita quantas requisicoes passam)
+
+Negativas:
+- Maior complexidade na gestão da aplicacao
+- Dificuldade na configuracao
+- impactos de performance
+- debug mais dificil
+
+ADR-008: Implementação de observabilidade com Prometheus, Grafana e Loki
+
+Status: Accepted
+
+Contexto:
+A aplicação é composta por múltiplos microserviços distribuídos, o que dificulta
+a identificação de falhas, análise de desempenho e monitoramento do sistema.
+
+É necessário ter visibilidade sobre métricas, logs e comportamento da aplicação
+em tempo real para garantir confiabilidade e facilitar troubleshooting.
+
+Decisão:
+Será adotada uma stack de observabilidade composta por:
+
+- Prometheus para coleta de métricas
+- Grafana para visualização e criação de dashboards
+- Loki para agregação e consulta de logs
+
+Os serviços irão expor métricas e logs estruturados para integração com essas ferramentas.
+
+Consequências:
+
+Positivas:
+- Visibilidade em tempo real do estado da aplicação
+- Facilidade na identificação e diagnóstico de falhas
+- Monitoramento de performance (latência, uso de recursos, etc.)
+- Centralização de logs e métricas
+- Suporte a criação de alertas e dashboards
+
+Negativas:
+- Aumento da complexidade da infraestrutura
+- Necessidade de configuração e manutenção contínua
+- Consumo adicional de recursos (armazenamento e processamento)
+- Curva de aprendizado para uso eficiente das ferramentas
+
+ADR-009: Garantia de cobertura de testes para fluxos críticos com Testcontainers
+
+Status: Accepted
+
+Contexto:
+A aplicação possui múltiplos microserviços e fluxos críticos de negócio que envolvem
+persistência de dados e comunicação assíncrona via mensageria.
+
+Erros nesses fluxos podem causar inconsistência de dados e falhas no sistema,
+sendo necessário garantir confiabilidade através de testes automatizados.
+
+Além disso, testes que dependem de banco de dados e mensageria precisam refletir
+o ambiente real para evitar falsos positivos.
+
+Decisão:
+Será adotada uma estratégia de testes automatizados com foco em fluxos críticos,
+incluindo:
+
+- Testes unitários para validação de regras de negócio isoladas
+- Testes de integração utilizando Testcontainers
+
+Os testes de integração irão subir containers reais de:
+- Banco de dados (PostgreSQL)
+- Mensageria (Kafka)
+
+Será definida uma cobertura mínima para fluxos críticos da aplicação.
+
+Consequências:
+
+Positivas:
+- Maior confiabilidade nos fluxos críticos
+- Redução de bugs em produção
+- Testes mais próximos do ambiente real
+- Validação real de integração com banco e mensageria
+- Segurança para refatorações
+
+Negativas:
+- Tempo maior de execução dos testes
+- Maior consumo de recursos durante os testes
+- Complexidade na configuração dos testes
+- Necessidade de manutenção dos cenários de teste
+
