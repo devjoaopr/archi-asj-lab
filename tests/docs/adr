@@ -219,29 +219,80 @@ Negativas:
 - impactos de performance
 - debug mais dificil
 
-ADR-008: Resiliencia dentro dos microservicos
+ADR-008: Implementação de observabilidade com Prometheus, Grafana e Loki
 
 Status: Accepted
 
 Contexto:
-A aplicação é composta por múltiplos microserviços, utilizando resilience para ministra-los.
+A aplicação é composta por múltiplos microserviços distribuídos, o que dificulta
+a identificação de falhas, análise de desempenho e monitoramento do sistema.
 
-É necessário garantir que a aplicacao continue funcionando mesmo se um microservico parar de funcionar
-para isso sera aplicado o resilience4j e aplicar o circuit breaker em servicos falhos.
+É necessário ter visibilidade sobre métricas, logs e comportamento da aplicação
+em tempo real para garantir confiabilidade e facilitar troubleshooting.
 
 Decisão:
-a implementacao do resilience4j e essencial para a integridade da aplicacao.
+Será adotada uma stack de observabilidade composta por:
+
+- Prometheus para coleta de métricas
+- Grafana para visualização e criação de dashboards
+- Loki para agregação e consulta de logs
+
+Os serviços irão expor métricas e logs estruturados para integração com essas ferramentas.
 
 Consequências:
 
 Positivas:
-- circuit breaker cancela requisicoes para services falhos
-- timeout (define o prazo de espera para entregar a requisicao
-- retry tenta novamente apos erro
-- rate limiter (limita quantas requisicoes passam)
+- Visibilidade em tempo real do estado da aplicação
+- Facilidade na identificação e diagnóstico de falhas
+- Monitoramento de performance (latência, uso de recursos, etc.)
+- Centralização de logs e métricas
+- Suporte a criação de alertas e dashboards
 
 Negativas:
-- Maior complexidade na gestão da aplicacao
-- Dificuldade na configuracao
-- impactos de performance
-- debug mais dificil
+- Aumento da complexidade da infraestrutura
+- Necessidade de configuração e manutenção contínua
+- Consumo adicional de recursos (armazenamento e processamento)
+- Curva de aprendizado para uso eficiente das ferramentas
+
+ADR-009: Garantia de cobertura de testes para fluxos críticos com Testcontainers
+
+Status: Accepted
+
+Contexto:
+A aplicação possui múltiplos microserviços e fluxos críticos de negócio que envolvem
+persistência de dados e comunicação assíncrona via mensageria.
+
+Erros nesses fluxos podem causar inconsistência de dados e falhas no sistema,
+sendo necessário garantir confiabilidade através de testes automatizados.
+
+Além disso, testes que dependem de banco de dados e mensageria precisam refletir
+o ambiente real para evitar falsos positivos.
+
+Decisão:
+Será adotada uma estratégia de testes automatizados com foco em fluxos críticos,
+incluindo:
+
+- Testes unitários para validação de regras de negócio isoladas
+- Testes de integração utilizando Testcontainers
+
+Os testes de integração irão subir containers reais de:
+- Banco de dados (PostgreSQL)
+- Mensageria (Kafka)
+
+Será definida uma cobertura mínima para fluxos críticos da aplicação.
+
+Consequências:
+
+Positivas:
+- Maior confiabilidade nos fluxos críticos
+- Redução de bugs em produção
+- Testes mais próximos do ambiente real
+- Validação real de integração com banco e mensageria
+- Segurança para refatorações
+
+Negativas:
+- Tempo maior de execução dos testes
+- Maior consumo de recursos durante os testes
+- Complexidade na configuração dos testes
+- Necessidade de manutenção dos cenários de teste
+
