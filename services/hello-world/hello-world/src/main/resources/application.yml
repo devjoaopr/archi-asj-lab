@@ -5,6 +5,10 @@ spring:
   application:
     name: hello-service
 
+logging:
+  pattern:
+    console: "%d{HH:mm:ss} [%X{correlationId}] %-5level %logger - %msg%n"
+
 eureka:
   client:
     service-url:

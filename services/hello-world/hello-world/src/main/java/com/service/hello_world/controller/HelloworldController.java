@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloworldController {
-    private static final Logger log = LoggerFactory.getLogger(HelloworldController.class);
-
+    private static final Logger log=
+            LoggerFactory.getLogger(HelloworldController.class);
     @GetMapping("/hello")
-    public String hello(@RequestHeader("X-Correlation-Id") String correlationId) {
-        log.info("Received request with correlationId={}", correlationId);
-        return "Hello World !";
+    public String hello(){
+        log.info("processing hello request")
+        return "Hello World";
     }
 }
