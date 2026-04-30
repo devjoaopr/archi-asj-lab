@@ -1,4 +1,4 @@
-package com.gateway.boot;
+package com.gateway.boot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
