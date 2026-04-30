@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/gateway" />
             <option value="$PROJECT_DIR$/infra" />
             <option value="$PROJECT_DIR$/services" />
+            <option value="$PROJECT_DIR$/services/customer-service" />
             <option value="$PROJECT_DIR$/services/hello" />
             <option value="$PROJECT_DIR$/services/hello-world" />
           </set>
