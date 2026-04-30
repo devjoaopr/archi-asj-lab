@@ -1,0 +1,19 @@
+services:
+  customer-db:
+    image: postgres:17
+    container_name: customer-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: customerdb
+      POSTGRES_USER: joao
+      POSTGRES_PASSWORD: joaodev
+
+    ports:
+      - "5435:5432"
+
+    volumes:
+      - customer_pgdata:/var/lib/postgresql/data
+
+volumes:
+  customer_pgdata:
