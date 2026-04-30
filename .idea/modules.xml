@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/asj-archi-lab.iml" filepath="$PROJECT_DIR$/.idea/asj-archi-lab.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/infra/asj-archi-lab.infra.main.iml" filepath="$PROJECT_DIR$/.idea/modules/infra/asj-archi-lab.infra.main.iml" />
     </modules>
   </component>
 </project>
