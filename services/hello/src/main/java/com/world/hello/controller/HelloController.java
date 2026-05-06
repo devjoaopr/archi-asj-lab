@@ -1,14 +1,23 @@
 package com.world.hello.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
-    @GetMapping("/world-hello")
-    public String hello(@RequestHeader("X-Correlation-Id") String correlationId) {
-        log.info("received request with correlationId={}", correlationId);
-        return "World, Hello!!";
+    private static final Logger log = LoggerFactory.getLogger(HelloController.class);
+
+    @GetMapping("/hello")
+    public String hello() {
+        log.info("Hello World");
+        return "Hello World";
+    }
+
+    @GetMapping("/error-test")
+    public String errorTest() {
+        throw new RuntimeException("simulated exception");
     }
 }

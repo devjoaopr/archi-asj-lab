@@ -1,0 +1,14 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: case
+
+  datasource:
+    url: jdbc:postgresql://localhost:5436/casedb
+    username: joao
+    password: joaodev
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml

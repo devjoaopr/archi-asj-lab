@@ -20,6 +20,9 @@
       <module name="asj-archi-lab.infra" options="-parameters" />
       <module name="asj-archi-lab.infra.main" options="-parameters" />
       <module name="asj-archi-lab.infra.test" options="-parameters" />
+      <module name="asj-archi-lab.services.case" options="-parameters" />
+      <module name="asj-archi-lab.services.case.main" options="-parameters" />
+      <module name="asj-archi-lab.services.case.test" options="-parameters" />
       <module name="asj-archi-lab.services.customer" options="-parameters" />
       <module name="asj-archi-lab.services.customer.main" options="-parameters" />
       <module name="asj-archi-lab.services.customer.test" options="-parameters" />
