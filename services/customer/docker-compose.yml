@@ -1,6 +1,6 @@
 services:
   customer-db:
-    image: postgres:17
+    image: postgres:17-alpine
     container_name: customer-db
     restart: unless-stopped
 

@@ -7,7 +7,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="asj-archi-lab.services.customer.main" value="60e60857-06db-40e9-bf6b-9f24eb3e29ed" />
-          <factory-entry name="entityManagerFactory" />
+          <factory-entry name="entityManagerFactory" value="60e60857-06db-40e9-bf6b-9f24eb3e29ed" />
         </datasource-mapping>
         <naming-strategy-map>
           <unit-entry name="entityManagerFactory" />

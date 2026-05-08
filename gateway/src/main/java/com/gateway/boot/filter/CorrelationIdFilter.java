@@ -3,7 +3,6 @@ package com.gateway.boot.filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
 import org.slf4j.MDC;
@@ -30,27 +29,14 @@ public class CorrelationIdFilter extends OncePerRequestFilter {
         if (correlationId == null || correlationId.isBlank()) {
             correlationId = UUID.randomUUID().toString();
         }
-
-        final String finalCorrelationId = correlationId;
-
-        MDC.put("correlationId", finalCorrelationId);
-        response.setHeader(CORRELATION_ID_HEADER, finalCorrelationId);
+        MDC.put(CORRELATION_ID_HEADER, correlationId);
+        response.setHeader(CORRELATION_ID_HEADER, correlationId);
 
         try {
-            filterChain.doFilter(
-                    new HttpServletRequestWrapper(request) {
-                        @Override
-                        public String getHeader(String name) {
-                            if (CORRELATION_ID_HEADER.equalsIgnoreCase(name)) {
-                                return finalCorrelationId;
-                            }
-                            return super.getHeader(name);
-                        }
-                    },
-                    response
-            );
+            filterChain.doFilter(request, response);
         } finally {
             MDC.clear();
         }
+
     }
 }
