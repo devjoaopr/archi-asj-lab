@@ -37,25 +37,6 @@ services:
     networks:
       - archi-net
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:24.0
-    container_name: keycloak
-    command: start-dev
-    environment:
-      KC_DB: postgres
-      KC_DB_URL_HOST: postgres-keycloak
-      KC_DB_URL_DATABASE: keycloak
-      KC_DB_USERNAME: user
-      KC_DB_PASSWORD: my_user
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    ports:
-      - "8085:8080"
-    depends_on:
-      - postgres-keycloak
-    networks:
-      - archi-net
-
   grafana:
     image: grafana/grafana:latest
     container_name: grafana

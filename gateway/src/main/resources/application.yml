@@ -16,6 +16,11 @@ spring:
               - Path=/test/**
             filters:
               - RewritePath=/test/(?<segment>.*), /$\{segment}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8085/realms/archlab
 
 logging:
   pattern:
@@ -43,3 +48,4 @@ eureka:
     prefer-ip-address: true
     ip-address: 127.0.0.1
     hostname: localhost
+
