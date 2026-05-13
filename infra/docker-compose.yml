@@ -14,20 +14,6 @@ services:
     networks:
       - archi-net
 
-  postgres-keycloak:
-    image: postgres:17
-    container_name: postgres-keycloak
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: my_user
-    ports:
-      - "5435:5432"
-    volumes:
-      - postgres_keycloak_data:/var/lib/postgresql/data
-    networks:
-      - archi-net
-
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -74,7 +60,6 @@ services:
 volumes:
   grafana_data:
   postgres_main_data:
-  postgres_keycloak_data:
   loki_data:
 
 networks:
