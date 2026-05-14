@@ -16,6 +16,11 @@ spring:
               - Path=/test/**
             filters:
               - RewritePath=/test/(?<segment>.*), /$\{segment}
+              - name: CircuitBreaker
+                args:
+                  name: authService
+                  fallbackUri: forward:/fallback/test
+
   security:
     oauth2:
       resourceserver:
@@ -49,3 +54,23 @@ eureka:
     ip-address: 127.0.0.1
     hostname: localhost
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      authService:
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+
+  retry:
+    instances:
+      authService:
+        max-attempts: 3
+        wait-duration: 1s
+
+  timelimiter:
+    instances:
+      authService:
+        timeout-duration: 3s

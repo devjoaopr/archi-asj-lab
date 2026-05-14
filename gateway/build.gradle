@@ -34,8 +34,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+    
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3'
+    implementation 'io.github.resilience4j:resilience4j-reactor'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
