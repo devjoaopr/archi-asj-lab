@@ -1,7 +1,6 @@
 package com.gateway.boot.config;
 
 import com.gateway.boot.filter.CorrelationIdBeforeFilter;
-import org.springframework.cloud.client.circuitbreaker.httpservice.CircuitBreakerRestClientHttpServiceGroupConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.function.RouterFunction;
@@ -40,7 +39,6 @@ public class GatewayConfig {
                         .setId("customerService")
                         .setFallbackPath("/fallback/customer")
                 ))
-
                 .filter(lb("customer-service"))
 
                 .build();
@@ -49,14 +47,13 @@ public class GatewayConfig {
     @Bean
     public RouterFunction<ServerResponse> caseServiceRoute() {
         return route("case-service-route")
-                .route(path("/v1/case/**"),
-                        http())
+                .route(path("/v1/case/**"), http())
                 .before(correlationIdBeforeFilter)
+                .filter(rewritePath("/v1/case/(?<segment>.*)", "/${segment}"))
                 .filter(circuitBreaker(config -> config
                         .setId("caseService")
                         .setFallbackPath("/fallback/case")
                 ))
-                .filter(rewritePath("/v1/case/(?<segment>.*)", "/${segment}"))
                 .filter(lb("case-service"))
                 .build();
     }

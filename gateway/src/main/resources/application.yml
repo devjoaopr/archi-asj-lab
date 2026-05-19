@@ -9,17 +9,13 @@ spring:
       mvc:
         http-client:
           type: restclient
-        routes:
-          - id: test-route
-            uri: https://httpbin.org
-            predicates:
-              - Path=/test/**
-            filters:
-              - RewritePath=/test/(?<segment>.*), /$\{segment}
-              - name: CircuitBreaker
-                args:
-                  name: authService
-                  fallbackUri: forward:/fallback/test
+    loadbalancer:
+      eager-load:
+        clients:
+          - customer-service
+          - case-service
+      hint:
+        localhost: none
 
   security:
     oauth2:
@@ -33,7 +29,7 @@ logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     reactor.netty.http.client: DEBUG
-
+  
 management:
   endpoints:
     web:
@@ -51,26 +47,34 @@ eureka:
     fetch-registry: true
   instance:
     prefer-ip-address: true
-    ip-address: 127.0.0.1
-    hostname: localhost
 
 resilience4j:
   circuitbreaker:
     instances:
-      authService:
+      caseService:
         sliding-window-size: 10
         minimum-number-of-calls: 5
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10s
-        permitted-number-of-calls-in-half-open-state: 3
+
+      customerService:
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
 
   retry:
     instances:
-      authService:
+      customerService:
+        max-attempts: 3
+        wait-duration: 1s
+      caseService:
         max-attempts: 3
         wait-duration: 1s
 
   timelimiter:
     instances:
-      authService:
+      customerService:
+        timeout-duration: 3s
+      caseService:
         timeout-duration: 3s

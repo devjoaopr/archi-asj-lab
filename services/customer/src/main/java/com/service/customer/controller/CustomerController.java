@@ -3,10 +3,10 @@ package com.service.customer.controller;
 import com.service.customer.dto.CreateCustomerRequest;
 import com.service.customer.dto.CustomerResponse;
 import com.service.customer.services.CustomerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/customers")
@@ -23,4 +23,10 @@ public class CustomerController {
     ) {
         return customerService.create(request);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomerResponse> getCaseById(@PathVariable UUID id) {
+        return ResponseEntity.ok(customerService.findById(id));
+    }
+
 }

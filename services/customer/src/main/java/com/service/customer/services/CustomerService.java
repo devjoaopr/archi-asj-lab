@@ -6,6 +6,8 @@ import com.service.customer.entity.Customer;
 import com.service.customer.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 
 @Service
 public class CustomerService {
@@ -36,4 +38,17 @@ public class CustomerService {
                 saved.getCpf()
         );
     }
+
+    public CustomerResponse findById(UUID id) {
+        Customer entity = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Case not found: " + id));
+
+        return new CustomerResponse(
+                entity.getId(),
+                entity.getUsername(),
+                entity.getAge(),
+                entity.getCpf()
+        );
+    }
+
 }

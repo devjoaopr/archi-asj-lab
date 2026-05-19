@@ -1,8 +1,11 @@
 package com.example.demo.dto;
 
+import java.util.UUID;
+
 public class CreateCaseRequest {
     private String name;
     private Boolean due;
+    private UUID customerId;
 
     public String getName() {
         return name;
@@ -18,5 +21,13 @@ public class CreateCaseRequest {
 
     public void setDue(Boolean due) {
         this.due = due;
+    }
+
+    public UUID getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(UUID customerId) {
+        this.customerId = customerId;
     }
 }
