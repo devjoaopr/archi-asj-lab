@@ -1,19 +1,24 @@
 package com.example.demo.entity;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "case")
-public class Case {
+@Table(name = "cases")
+public class Cases {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String user;
+    private String name;
     private Boolean due;
+    @CreationTimestamp
     @Column
     private LocalDateTime created_at;
+
+    @Column(name = "customer_id")
+    private UUID customerId;
 
     public UUID getId() {
         return id;
@@ -23,12 +28,20 @@ public class Case {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public void  setCustomerId(UUID customerId) {
+        this.customerId = customerId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public UUID getCustomerId() {
+        return customerId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getDue() {

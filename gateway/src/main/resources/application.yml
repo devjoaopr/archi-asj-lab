@@ -4,34 +4,24 @@ server:
 spring:
   application:
     name: gateway
+
   cloud:
     gateway:
       mvc:
         http-client:
           type: restclient
-        routes:
-          - id: test-route
-            uri: https://httpbin.org
-            predicates:
-              - Path=/test/**
-            filters:
-              - RewritePath=/test/(?<segment>.*), /$\{segment}
 
-logging:
-  pattern:
-    console: "%d{HH:mm:ss} [%X{correlationId}] %-5level %logger - %msg%n"
-  level:
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty.http.client: DEBUG
+    loadbalancer:
+      eager-load:
+        clients:
+          - customer-service
+          - case-service
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8085/realms/archlab
 
 eureka:
   client:
@@ -39,7 +29,6 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+
   instance:
     prefer-ip-address: true
-    ip-address: 127.0.0.1
-    hostname: localhost

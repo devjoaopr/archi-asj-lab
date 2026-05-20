@@ -30,13 +30,23 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'org.postgresql:postgresql'
+    compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-liquibase-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-restclient-test'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
-
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2025.1.1"
+    }
+}
 tasks.named('test') {
     useJUnitPlatform()
 }

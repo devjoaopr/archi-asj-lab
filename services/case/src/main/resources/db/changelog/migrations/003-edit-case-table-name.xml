@@ -6,8 +6,8 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changelog/migrations/001-create-case-table.xml"/>
-    <include file="/db/changelog/migrations/002-edit-case-table.xml"/>
-    <include file="/db/changelog/migrations/003-edit-case-table-name.xml"/>
-    <include file="db/changelog/migrations/004-add-customer-id.xml"/>
+    <changeSet id="002-edit-case-table" author="devjoaopr">
+        <renameTable newTableName="cases" oldTableName="case" />
+    </changeSet>
+
 </databaseChangeLog>

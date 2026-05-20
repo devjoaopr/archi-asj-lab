@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: customer
+    name: customer-service
 
   datasource:
     url: jdbc:postgresql://localhost:5435/customerdb
@@ -30,3 +30,12 @@ management:
   otlp:
     tracing:
       endpoint: http://localhost:4318/v1/traces
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true

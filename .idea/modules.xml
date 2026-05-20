@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/infra/asj-archi-lab.infra.main.iml" filepath="$PROJECT_DIR$/.idea/modules/infra/asj-archi-lab.infra.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/case/asj-archi-lab.services.case.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/case/asj-archi-lab.services.case.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/case/asj-archi-lab.services.case.test.iml" filepath="$PROJECT_DIR$/.idea/modules/services/case/asj-archi-lab.services.case.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.test.iml" filepath="$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.test.iml" />
     </modules>
   </component>
 </project>
