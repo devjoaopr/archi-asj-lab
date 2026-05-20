@@ -17,7 +17,7 @@ public class Cases {
     @Column
     private LocalDateTime created_at;
 
-    @Column(name = "costumer_id")
+    @Column(name = "customer_id")
     private UUID customerId;
 
     public UUID getId() {

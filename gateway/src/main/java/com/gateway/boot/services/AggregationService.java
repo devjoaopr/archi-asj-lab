@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AggregationService {
@@ -18,7 +19,7 @@ public class AggregationService {
         this.caseRestClient = caseRestClient;
     }
 
-    public CustomerCaseSummary getCustomerwithCases(String customerId, String authorizationHeader) {
+    public CustomerCaseSummary getCustomerwithCases(UUID customerId, String authorizationHeader) {
 
         CustomerResponse customer = customerRestClient.get()
                 .uri("/customers/{id}", customerId)

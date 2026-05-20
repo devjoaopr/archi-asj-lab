@@ -1,5 +1,5 @@
 services:
-  customer-db:
+  case-db:
     image: postgres:17
     container_name: case-db
     restart: unless-stopped

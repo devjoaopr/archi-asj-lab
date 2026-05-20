@@ -4,18 +4,18 @@ server:
 spring:
   application:
     name: gateway
+
   cloud:
     gateway:
       mvc:
         http-client:
           type: restclient
+
     loadbalancer:
       eager-load:
         clients:
           - customer-service
           - case-service
-      hint:
-        localhost: none
 
   security:
     oauth2:
@@ -23,58 +23,12 @@ spring:
         jwt:
           issuer-uri: http://localhost:8085/realms/archlab
 
-logging:
-  pattern:
-    console: "%d{HH:mm:ss} [%X{correlationId}] %-5level %logger - %msg%n"
-  level:
-    org.springframework.cloud.gateway: DEBUG
-    reactor.netty.http.client: DEBUG
-  
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    gateway:
-      enabled: true
-
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
+
   instance:
     prefer-ip-address: true
-
-resilience4j:
-  circuitbreaker:
-    instances:
-      caseService:
-        sliding-window-size: 10
-        minimum-number-of-calls: 5
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 10s
-
-      customerService:
-        sliding-window-size: 10
-        minimum-number-of-calls: 5
-        failure-rate-threshold: 50
-        wait-duration-in-open-state: 10s
-
-  retry:
-    instances:
-      customerService:
-        max-attempts: 3
-        wait-duration: 1s
-      caseService:
-        max-attempts: 3
-        wait-duration: 1s
-
-  timelimiter:
-    instances:
-      customerService:
-        timeout-duration: 3s
-      caseService:
-        timeout-duration: 3s

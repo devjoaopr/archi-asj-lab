@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.gateway.boot.dto.CustomerCaseSummary;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/v1/aggregate")
 public class AggregationController {
@@ -18,12 +20,10 @@ public class AggregationController {
 
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<CustomerCaseSummary> getCustomerWithCases(
-            @PathVariable String customerId,
+            @PathVariable UUID customerId,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization
     ) {
         CustomerCaseSummary summary = this.aggregationService.getCustomerwithCases(customerId, authorization);
         return ResponseEntity.ok().body(summary);
     }
-
-
 }

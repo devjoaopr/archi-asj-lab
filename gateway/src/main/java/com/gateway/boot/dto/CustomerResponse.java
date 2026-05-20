@@ -1,9 +1,11 @@
 package com.gateway.boot.dto;
 
+import java.util.UUID;
+
 public record CustomerResponse(
-        String id,
-        String name,
-        String email
+        UUID id,
+        String username,
+        Integer age,
+        String cpf
 ) {
 }
-

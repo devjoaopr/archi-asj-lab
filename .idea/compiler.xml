@@ -9,6 +9,16 @@
         </processorPath>
         <module name="asj-archi-lab.infra.main" />
       </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.46/a5cfe99fdf320e84955ef653f2ce1bf789d11385/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="asj-archi-lab.services.case.test" />
+        <module name="asj-archi-lab.services.customer.test" />
+        <module name="asj-archi-lab.services.case.main" />
+        <module name="asj-archi-lab.services.customer.main" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="25" />
   </component>

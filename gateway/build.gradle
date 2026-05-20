@@ -37,7 +37,6 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
 
-    implementation 'io.github.resilience4j:resilience4j-spring-boot3'
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
