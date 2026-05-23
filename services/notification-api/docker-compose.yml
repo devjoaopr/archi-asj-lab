@@ -1,51 +1,28 @@
 services:
 
-  customer-db:
-
-    image: postgres:17-alpine
-
-    container_name: customer-db
-
-    restart: unless-stopped
-
+  postgres-notification:
+    image: postgres:17
+    container_name: postgres-notifications
     environment:
-
-      POSTGRES_DB: customerdb
-
+      POSTGRES_DB: notificationdb
       POSTGRES_USER: joao
-
       POSTGRES_PASSWORD: joaodev
-
     ports:
-
-      - "5435:5432"
-
+      - "5438:5432"
     volumes:
-
-      - customer_pgdata:/var/lib/postgresql/data
-
+      - postgres_data:/var/lib/postgresql/data
     networks:
-
       - backend
 
   zookeeper:
-
     image: confluentinc/cp-zookeeper:7.6.1
-
     container_name: zookeeper
-
     environment:
-
       ZOOKEEPER_CLIENT_PORT: 2181
-
       ZOOKEEPER_TICK_TIME: 2000
-
     ports:
-
       - "2181:2181"
-
     networks:
-
       - backend
 
   kafka:
@@ -85,67 +62,47 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
 
     networks:
-
       - backend
 
   kafka-ui:
-
     image: provectuslabs/kafka-ui:latest
-
     container_name: kafka-ui
-
     depends_on:
-
       - kafka
-
     ports:
-
       - "8085:8080"
 
     environment:
-
       KAFKA_CLUSTERS_0_NAME: local
-
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
 
     networks:
-
       - backend
 
-  customer-service:
-
+  notification-service:
     build: .
-
-    container_name: customer-service
+    container_name: notification-service
 
     depends_on:
-
       - kafka
-
-      - customer-db
+      - postgres-notification
 
     ports:
-
-      - "8086:8083"
+      - "8086:8080"
 
     environment:
 
-      SPRING_DATASOURCE_URL: jdbc:postgresql://customer-db:5432/customerdb
-
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-notification:5432/notificationdb
       SPRING_DATASOURCE_USERNAME: joao
-
       SPRING_DATASOURCE_PASSWORD: joaodev
 
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
     networks:
-
       - backend
 
 networks:
-
   backend:
 
 volumes:
-
-  customer_pgdata:
+  postgres_data:

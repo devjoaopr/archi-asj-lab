@@ -20,6 +20,14 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/services/notification-api" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/services/notification-api" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$USER_HOME$/Downloads/case/case" />
       </GradleProjectSettings>
     </option>

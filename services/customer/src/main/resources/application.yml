@@ -5,6 +5,17 @@ spring:
   application:
     name: customer-service
 
+  kafka:
+
+    bootstrap-servers: localhost:9092
+
+    producer:
+
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
   datasource:
     url: jdbc:postgresql://localhost:5435/customerdb
     username: joao
@@ -30,6 +41,7 @@ management:
   otlp:
     tracing:
       endpoint: http://localhost:4318/v1/traces
+
 
 eureka:
   client:

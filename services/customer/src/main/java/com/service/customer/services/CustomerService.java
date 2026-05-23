@@ -3,19 +3,24 @@ package com.service.customer.services;
 import com.service.customer.dto.CreateCustomerRequest;
 import com.service.customer.dto.CustomerResponse;
 import com.service.customer.entity.Customer;
+import com.service.customer.producer.CustomerProducer;
 import com.service.customer.repository.CustomerRepository;
+import event.CustomerCreatedEvent;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 
 @Service
+
 public class CustomerService {
 
     private final CustomerRepository repository;
+    private final CustomerProducer producer;
 
-    public CustomerService(CustomerRepository repository) {
+    public CustomerService(CustomerRepository repository, CustomerProducer producer) {
         this.repository = repository;
+        this.producer = producer;
     }
 
     public CustomerResponse create(CreateCustomerRequest request) {
@@ -30,6 +35,15 @@ public class CustomerService {
         customer.setCpf(request.getCpf());
 
         Customer saved = repository.save(customer);
+
+        CustomerCreatedEvent event = new CustomerCreatedEvent(
+                UUID.randomUUID().toString(),
+                customer.getId(),
+                customer.getUsername(),
+                customer.getCpf()
+        );
+
+        producer.publish(event);
 
         return new CustomerResponse(
                 saved.getId(),
