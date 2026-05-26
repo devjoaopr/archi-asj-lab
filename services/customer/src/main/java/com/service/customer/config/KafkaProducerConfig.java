@@ -1,61 +1,25 @@
 package com.service.customer.config;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import event.CustomerCreatedEvent;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringSerializer;
+import com.service.sharedevents.CustomerCreatedEvent;
+import org.springframework.boot.kafka.autoconfigure.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 public class KafkaProducerConfig {
-
     @Bean
-    public ProducerFactory<
-                String,
-                CustomerCreatedEvent
-                > producerFactory(){
-
-        Map<String,Object> config =
-                new HashMap<>();
-
-        config.put(
-                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-                "kafka:29092"
-        );
-
-        config.put(
-                ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-                StringSerializer.class
-        );
-
-        config.put(
-                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-                JsonSerializer.class
-        );
-
+    ProducerFactory<String, CustomerCreatedEvent> producerFactory(KafkaProperties kafkaProperties) {
         return new DefaultKafkaProducerFactory<>(
-                config
+                kafkaProperties.buildProducerProperties()
         );
-
     }
 
     @Bean
-    public KafkaTemplate<
-                String,
-                CustomerCreatedEvent
-                > kafkaTemplate(){
-
-        return new KafkaTemplate<>(
-                producerFactory()
-        );
-
+    KafkaTemplate<String, CustomerCreatedEvent> kafkaTemplate(ProducerFactory<String, CustomerCreatedEvent> producerFactory) {
+        return new KafkaTemplate<>(producerFactory);
     }
-
 }

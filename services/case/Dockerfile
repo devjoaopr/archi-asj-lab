@@ -3,7 +3,9 @@ LABEL authors="JPedro"
 
 WORKDIR /app
 
-COPY . .
+COPY services/ .
+
+WORKDIR /app/case
 
 RUN chmod +x gradlew
 
