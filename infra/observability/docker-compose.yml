@@ -1,0 +1,27 @@
+services:
+
+  prometheus:
+    image: prom/prometheus
+
+    ports:
+      - "9090:9090"
+
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+    networks:
+      - archi-net
+
+  grafana:
+    image: grafana/grafana
+
+    ports:
+      - "3000:3000"
+
+    networks:
+      - archi-net
+
+networks:
+  archi-net:
+    external: true
+    name: infra_archi-net
