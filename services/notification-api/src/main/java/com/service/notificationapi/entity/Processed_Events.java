@@ -23,8 +23,15 @@ public class Processed_Events {
     private String eventId;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
     private UUID id;
 
+    public Processed_Events(
+            Instant processedAt,
+            String eventId
+    ) {
+        this.processedAt = processedAt;
+        this.eventId = eventId;
+    }
 }

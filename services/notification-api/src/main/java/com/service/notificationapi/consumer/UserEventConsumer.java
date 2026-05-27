@@ -1,6 +1,6 @@
 package com.service.notificationapi.consumer;
 
-import com.service.notificationapi.event.UserCreatedEvent;
+import com.service.sharedevents.CustomerCreatedEvent;
 import com.service.notificationapi.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -12,11 +12,11 @@ public class UserEventConsumer {
     private final NotificationService notificationService;
 
     @KafkaListener(
-            topics = "user.created",
+            topics = "customer.created",
             groupId = "notification-group"
     )
 
-    public void consume(UserCreatedEvent event){
+    public void consume(CustomerCreatedEvent event) {
         notificationService.process(event);
     }
 

@@ -20,10 +20,30 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/services/shared-events" name="shared-events">
+                <projects>
+                  <project path="$PROJECT_DIR$/services/shared-events" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$/services/notification-api" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/services/notification-api" />
+            <option value="$PROJECT_DIR$/services/shared-events" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/services/shared-events" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/services/shared-events" />
           </set>
         </option>
       </GradleProjectSettings>

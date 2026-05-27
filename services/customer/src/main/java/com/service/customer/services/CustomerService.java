@@ -5,7 +5,7 @@ import com.service.customer.dto.CustomerResponse;
 import com.service.customer.entity.Customer;
 import com.service.customer.producer.CustomerProducer;
 import com.service.customer.repository.CustomerRepository;
-import event.CustomerCreatedEvent;
+import com.service.sharedevents.CustomerCreatedEvent;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -33,14 +33,16 @@ public class CustomerService {
         customer.setUsername(request.getUsername());
         customer.setAge(request.getAge());
         customer.setCpf(request.getCpf());
+        customer.setAge(request.getAge());
 
         Customer saved = repository.save(customer);
 
         CustomerCreatedEvent event = new CustomerCreatedEvent(
-                UUID.randomUUID().toString(),
-                customer.getId(),
-                customer.getUsername(),
-                customer.getCpf()
+                UUID.randomUUID(),
+                saved.getId(),
+                saved.getUsername(),
+                saved.getAge(),
+                saved.getCpf()
         );
 
         producer.publish(event);

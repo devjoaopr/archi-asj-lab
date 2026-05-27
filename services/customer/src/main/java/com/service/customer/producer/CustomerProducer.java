@@ -1,7 +1,6 @@
 package com.service.customer.producer;
 
-import com.service.customer.entity.Customer;
-import event.CustomerCreatedEvent;
+import com.service.sharedevents.CustomerCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

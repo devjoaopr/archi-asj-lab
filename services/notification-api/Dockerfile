@@ -2,7 +2,8 @@ FROM eclipse-temurin:25-jdk
 
 WORKDIR /app
 
-COPY . .
+COPY services/shared-events/ /shared-events/
+COPY services/notification-api/ .
 
 RUN chmod +x gradlew
 
