@@ -261,6 +261,35 @@ services:
     networks:
       - archi-net
 
+  register-service:
+
+    build:
+      context: ..
+      dockerfile: services/register-service/Dockerfile
+
+    container_name: register-service
+
+    depends_on:
+      - customer-db
+      - eureka-server
+
+    ports:
+      - "8089:8089"
+
+    environment:
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://customer-db:5432/customerdb
+
+      SPRING_DATASOURCE_USERNAME: joao
+
+      SPRING_DATASOURCE_PASSWORD: joaodev
+
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+    networks:
+      - archi-net
+
+
   gateway-service:
 
     build:
