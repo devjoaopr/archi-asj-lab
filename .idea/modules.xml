@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.test.iml" filepath="$PROJECT_DIR$/.idea/modules/services/customer/asj-archi-lab.services.customer.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/notification-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/notification-api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/register.main.iml" filepath="$PROJECT_DIR$/.idea/modules/register.main.iml" />
     </modules>
   </component>
 </project>

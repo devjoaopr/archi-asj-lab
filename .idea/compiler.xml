@@ -7,7 +7,8 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.46/a5cfe99fdf320e84955ef653f2ce1bf789d11385/lombok-1.18.46.jar" />
         </processorPath>
-        <module name="notification-api.main" />
+        <module name="register.main" />
+        <module name="register.test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="25" />
@@ -38,6 +39,9 @@
       <module name="notification-service" options="-parameters" />
       <module name="notification-service.main" options="-parameters" />
       <module name="notification-service.test" options="-parameters" />
+      <module name="register" options="-parameters" />
+      <module name="register.main" options="-parameters" />
+      <module name="register.test" options="-parameters" />
       <module name="service" options="-parameters" />
       <module name="service.main" options="-parameters" />
       <module name="service.test" options="-parameters" />
