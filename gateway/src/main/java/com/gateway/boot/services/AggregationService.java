@@ -13,10 +13,12 @@ import java.util.UUID;
 public class AggregationService {
     private final RestClient customerRestClient;
     private final RestClient caseRestClient;
+    private final RestClient userRestClient;
 
-    public AggregationService(RestClient customerRestClient, RestClient caseRestClient) {
+    public AggregationService(RestClient customerRestClient, RestClient caseRestClient, RestClient userRestClient) {
         this.customerRestClient = customerRestClient;
         this.caseRestClient = caseRestClient;
+        this.userRestClient = userRestClient;
     }
 
     public CustomerCaseSummary getCustomerwithCases(UUID customerId, String authorizationHeader) {

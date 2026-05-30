@@ -23,7 +23,7 @@ public class GatewayConfig {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> userServiceRoute() {
+    public RouterFunction<ServerResponse> customerServiceRoute() {
 
         return route("customer-service-route")
                 .route(path("/v1/customer/**"), http())
@@ -41,6 +41,27 @@ public class GatewayConfig {
                 ))
                 .filter(lb("customer-service"))
 
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> registerServiceRoute() {
+
+        return route("register-service-route")
+                .route(path("/v1/register/**"), http())
+
+                .before(correlationIdBeforeFilter)
+
+                .filter(rewritePath(
+                        "/v1/register/(?<segment>.*)",
+                        "/${segment}"
+                ))
+
+                .filter(circuitBreaker(config -> config
+                        .setId("registerService")
+                        .setFallbackPath("/fallback/register")
+                ))
+                .filter(lb("register-service"))
                 .build();
     }
 

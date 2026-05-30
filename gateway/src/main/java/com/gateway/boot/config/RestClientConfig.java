@@ -43,4 +43,16 @@ public class RestClientConfig {
                 .baseUrl("http://case-service")
                 .build();
     }
+
+
+    @Bean
+    public RestClient userRestClient(
+            @Qualifier("loadBalancedBuilder")
+            RestClient.Builder builder
+    ) {
+        return builder
+                .clone()
+                .baseUrl("http://user-service")
+                .build();
+    }
 }

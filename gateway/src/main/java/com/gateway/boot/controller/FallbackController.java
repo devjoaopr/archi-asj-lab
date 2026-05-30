@@ -19,6 +19,15 @@ public class FallbackController {
                 .body("Customer service unavailable");
     }
 
+    @RequestMapping(value = "/user", method = {
+            RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH,
+    })
+    public ResponseEntity<String> userFallback() {
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body("Customer service unavailable");
+    }
+
     @RequestMapping(value = "/case", method = {
             RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH,
     })

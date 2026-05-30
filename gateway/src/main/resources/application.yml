@@ -16,13 +16,18 @@ spring:
         clients:
           - customer-service
           - case-service
-
+          - register-service
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8088/realms/archlab
           jwk-set-uri: http://keycloak:8080/realms/archlab/protocol/openid-connect/certs
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
 
 eureka:
   client:
