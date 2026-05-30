@@ -26,7 +26,9 @@ public class SecurityConfig {
 
                         .requestMatchers("/fallback/**").permitAll()
                         .requestMatchers("/v1/aggregate/**").permitAll()
+                        .requestMatchers("/v1/register/**").permitAll()
                         .requestMatchers("/v1/customer/**").hasRole("USER")
+                        .requestMatchers("/v1/user/**").permitAll()
                         .requestMatchers("/v1/case/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
