@@ -8,8 +8,9 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CreateUserRequest {
-    private UUID id;
+
     private String username;
     private String email;
     private String password;
+    private String role;
 }

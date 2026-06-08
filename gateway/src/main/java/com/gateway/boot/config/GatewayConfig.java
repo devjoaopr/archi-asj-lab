@@ -48,20 +48,20 @@ public class GatewayConfig {
     public RouterFunction<ServerResponse> registerServiceRoute() {
 
         return route("register-service-route")
-                .route(path("/v1/register/**"), http())
+                .route(path("/v1/user/**"), http())
 
                 .before(correlationIdBeforeFilter)
 
                 .filter(rewritePath(
-                        "/v1/register/(?<segment>.*)",
+                        "/v1/user/(?<segment>.*)",
                         "/${segment}"
                 ))
 
                 .filter(circuitBreaker(config -> config
-                        .setId("registerService")
-                        .setFallbackPath("/fallback/register")
+                        .setId("userService")
+                        .setFallbackPath("/fallback/user")
                 ))
-                .filter(lb("register-service"))
+                .filter(lb("user-service"))
                 .build();
     }
 

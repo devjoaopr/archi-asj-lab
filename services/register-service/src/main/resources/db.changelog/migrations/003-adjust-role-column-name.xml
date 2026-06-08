@@ -6,8 +6,8 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="/db.changelog/migrations/001-create-user-table.xml"/>
-    <include file="db.changelog/migrations/002-create-role-table.xml"/>
-    <include file="db.changelog/migrations/003-adjust-role-column-name.xml"/>
-    <include file="db.changelog/migrations/004-users-role-relationship-table.xml"/>
+    <changeSet id="003-create-role-column-name" author="devjoaopr">
+        <renameColumn tableName="roles" oldColumnName="username" newColumnName="name"/>
+    </changeSet>
+
 </databaseChangeLog>
