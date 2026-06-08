@@ -28,6 +28,15 @@ public class FallbackController {
                 .body("Customer service unavailable");
     }
 
+    @RequestMapping(value = "/register", method = {
+            RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH,
+    })
+    public ResponseEntity<String> registerFallback() {
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body("register service unavailable");
+    }
+
     @RequestMapping(value = "/case", method = {
             RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH,
     })

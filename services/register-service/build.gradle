@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.service'
 version = '0.0.1-SNAPSHOT'
-description = 'register-service'
+description = 'user-service'
 
 java {
     toolchain {
@@ -37,6 +37,10 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-liquibase'
     testImplementation 'org.springframework.boot:spring-boot-starter-liquibase-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 }
 
 dependencyManagement {

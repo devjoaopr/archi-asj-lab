@@ -17,22 +17,16 @@ spring:
           - customer-service
           - case-service
           - register-service
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8088/realms/archlab
-          jwk-set-uri: http://keycloak:8080/realms/archlab/protocol/openid-connect/certs
 
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG
     org.springframework.cloud.loadbalancer: DEBUG
-
+    org.springframework.security: DEBUG
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka-server:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
 
@@ -52,3 +46,6 @@ management:
       export:
         enabled: true
 
+app:
+  jwt-secret: daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb
+  jwt-expiration-milliseconds: 604800000
