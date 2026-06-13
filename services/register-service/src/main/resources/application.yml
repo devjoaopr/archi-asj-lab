@@ -11,6 +11,14 @@ spring:
     username: joao
     password: joaodev
 
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        multiTenancy: SCHEMA
+    show-sql: true
+
   liquibase:
     change-log: classpath:/db.changelog/db.changelog-master.xml
 

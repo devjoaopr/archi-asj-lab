@@ -296,3 +296,38 @@ Negativas:
 - Complexidade na configuração dos testes
 - Necessidade de manutenção dos cenários de teste
 
+estrutura de Schema per tenant em 1 banco de dados
+- Como funciona ?
+    a estrutura de funcionamento e service dos schemas funciona utilizando 5 arquivos
+    - AppTenantContext
+        recebe/coloca dentro dos headers da requisicao o
+            - tenant-id
+            - tenant-header
+            - default-tenant
+            - tenant-id
+        alem disso caso nao tenha tenant identificado ele seta o tenant no header da
+        requisicao utilizando o doFilter
+
+    - CurrentTenantIdentifierResolverImpl
+        Valida as sessoes atuais de tenants existentes.
+        retorna quem e ou sao os tenants atuais na sessao.
+
+    - MultiTenantConnectionProviderImpl
+        Seta a dataSource que sera usada
+        Pega a conexao atraves do objeto tenantIdentifier e retorna ela
+        atraves do tenant identifier e connection ele seta e executa o search_path para
+        public
+
+    - TenantMigrationService
+        seleciona e verifica os schemas do banco para rodar as migracoes do liquibase
+        dentro do banco, caso nao tenha schemas ele identifica, caso tenha ele inicia um
+        laco de repeticao for para rodar as migracoes dentro de cada schema dentro do
+        banco de dados, atualiza os schemas e finaliza a funcao.
+
+    - TenantService
+        cria o tenant novo e eh passado na requisicao.
+
+    - HibernateConfig
+        seta o data-source
+        os packages para serem escaneados
+        faz a configuracao geral para o uso do liquibase e os metodos.
