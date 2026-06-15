@@ -64,4 +64,4 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
           SPRING_DATASOURCE_USERNAME: joao
           SPRING_DATASOURCE_PASSWORD: joaodev
-        run: ./gradlew build
+        run: ./gradlew build --stacktrace --info
