@@ -32,6 +32,9 @@ jobs:
         working-directory: 'services/register-service'
         run: java --version
 
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
       - name: Check gradlew
         working-directory: 'services/register-service'
         run: ./gradlew --version
