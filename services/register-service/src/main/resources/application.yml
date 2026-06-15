@@ -7,9 +7,9 @@ spring:
     name: user-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5435/customerdb
-    username: joao
-    password: joaodev
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
@@ -25,15 +25,17 @@ spring:
 app:
   jwt-secret: daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb
   jwt-expiration-milliseconds: 604800000
+  run-tenants-migrations: ${APP_RUN_TENANT_MIGRATIONS:false}
 
 eureka:
   instance:
     prefer-ip-address: false
   client:
-    register-with-eureka: true
+    register-with-eureka: ${EUREKA_REGISTER_WITH_EUREKA:true}
+    fetch-registry: ${EUREKA_FETCH_REGISTRY:true}
     eureka-service-url-poll-interval-seconds: 300
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://localhost:8761/eureka/}
 
 logging:
   level:
