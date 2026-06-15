@@ -8,11 +8,13 @@ on:
   push:
     branches:
       - development
-
+    paths:
+      - 'services/register-service/**'
   pull_request:
     branches:
       - main
-
+    paths:
+      - 'services/register-service/**'
 jobs:
   deployment:
     runs-on: ubuntu-22.04
@@ -27,14 +29,14 @@ jobs:
         uses: gradle/actions/setup-gradle@017a9effdb900e5b5b2fddfb590a105619dca3c3
 
       - name: Check Java
+        working-directory: 'services/register-service'
         run: java --version
 
-      - name: Grant execute permission
-        run: chmod +x gradlew
-
       - name: Check gradlew
+        working-directory: 'services/register-service'
         run: ./gradlew --version
 
       - name: Build gradlew
+        working-directory: 'services/register-service'
         run: ./gradlew build
 
