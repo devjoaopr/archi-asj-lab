@@ -66,3 +66,10 @@ jobs:
           SPRING_DATASOURCE_PASSWORD: joaodev
         run: ./gradlew build
 
+      - name: Run tenant migrations
+        run: |
+          curl --fail \
+            --retry 3 \
+            --retry-delay 5 \
+            --request POST \
+            "${{ secrets.TENANT_MIGRATION_URL }}"
