@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(
         name = "app.run-tenant-migrations",
-        havingValue = "value"
+        havingValue = "true"
 )
 @RequiredArgsConstructor
 public class TenantMigrationRunner implements CommandLineRunner {
+
     private final TenantMigrationService migrationService;
 
     @Override
@@ -19,6 +20,5 @@ public class TenantMigrationRunner implements CommandLineRunner {
         migrationService.runLiquibase();
         System.exit(0);
     }
-
 }
 
