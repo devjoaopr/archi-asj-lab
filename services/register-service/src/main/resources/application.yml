@@ -25,6 +25,7 @@ spring:
 app:
   jwt-secret: daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb
   jwt-expiration-milliseconds: 604800000
+  run-tenants-migrations: ${APP_RUN_TENANT_MIGRATIONS:false}
 
 eureka:
   instance:

@@ -12,6 +12,7 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import java.util.List;
 
 
 @Service
+@Profile("migration")
 public class TenantMigrationService {
 
     private static final Logger logger = (Logger) LoggerFactory.getLogger(TenantMigrationService.class);
