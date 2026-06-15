@@ -17,7 +17,26 @@ on:
       - 'services/register-service/**'
 jobs:
   deployment:
+    defaults:
+      run:
+        working-directory: services/register-service
     runs-on: ubuntu-22.04
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: customerdb
+          POSTGRES_USER: joao
+          POSTGRES_PASSWORD: joaodev
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd "pg_isready -U joao"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     environment: development
     steps:
       - uses: actions/checkout@v6
@@ -29,18 +48,18 @@ jobs:
         uses: gradle/actions/setup-gradle@017a9effdb900e5b5b2fddfb590a105619dca3c3
 
       - name: Check Java
-        working-directory: 'services/register-service'
         run: java --version
 
       - name: Grant execute permission
-        working-directory: 'services/register-service'
         run: chmod +x gradlew
 
       - name: Check gradlew
-        working-directory: 'services/register-service'
         run: ./gradlew --version
 
       - name: Build gradlew
-        working-directory: 'services/register-service'
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
+          SPRING_DATASOURCE_USERNAME: joao
+          SPRING_DATASOURCE_PASSWORD: joaodev
         run: ./gradlew build
 
