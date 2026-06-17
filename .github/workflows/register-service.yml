@@ -66,9 +66,9 @@ jobs:
           EUREKA_CLIENT_ENABLED: false
           EUREKA_REGISTER_WITH_EUREKA: false
           EUREKA_FETCH_REGISTRY: false
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
-          SPRING_DATASOURCE_USERNAME: joao
-          SPRING_DATASOURCE_PASSWORD: joaodev
+          SPRING_DATASOURCE_URL: jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres?user=postgres.imimrmhyyxamkwizvhqq&password=%40jdev123%2Cjoao&prepareThreshold=0
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: @jdev123,joao
         run: ./gradlew build
 
       - name: run tenant migrations
@@ -80,8 +80,8 @@ jobs:
           EUREKA_REGISTER_WITH_EUREKA: false
           EUREKA_FETCH_REGISTRY: false
 
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
-          SPRING_DATASOURCE_USERNAME: joao
-          SPRING_DATASOURCE_PASSWORD: joaodev
+          SPRING_DATASOURCE_URL: jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres?user=postgres.imimrmhyyxamkwizvhqq&password=%40jdev123%2Cjoao&prepareThreshold=0
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: @jdev123,joao
 
         run: ./gradlew bootrun
