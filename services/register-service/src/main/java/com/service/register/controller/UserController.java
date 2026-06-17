@@ -20,7 +20,6 @@ public class UserController {
     @Autowired
     private TenantMigrationService migrationService;
 
-
     public UserService userService;
 
     public UserController(UserService userService) {
@@ -43,6 +42,5 @@ public class UserController {
         migrationService.runLiquibase();
         return new ResponseEntity<>("Migration complete", HttpStatus.OK);
     }
-
 
 }
