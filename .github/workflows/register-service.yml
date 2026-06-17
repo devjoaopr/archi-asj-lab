@@ -8,11 +8,15 @@ on:
   push:
     branches:
       - development
+      - prod-test
+      - prod
     paths:
       - 'services/register-service/**'
   pull_request:
     branches:
       - main
+      - prod
+      - prod-test
     paths:
       - 'services/register-service/**'
 jobs:
