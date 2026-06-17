@@ -73,6 +73,7 @@ jobs:
 
       - name: run tenant migrations
         env:
+          PORT: 8089
           APP_RUN_TENANT_MIGRATIONS: true
 
           EUREKA_CLIENT_ENABLED: false
