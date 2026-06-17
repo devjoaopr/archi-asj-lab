@@ -8,11 +8,15 @@ on:
   push:
     branches:
       - development
+      - prod-test
+      - prod
     paths:
       - 'services/register-service/**'
   pull_request:
     branches:
       - main
+      - prod
+      - prod-test
     paths:
       - 'services/register-service/**'
 jobs:
@@ -58,24 +62,26 @@ jobs:
 
       - name: Build gradlew
         env:
+          PORT: 8089
           EUREKA_CLIENT_ENABLED: false
           EUREKA_REGISTER_WITH_EUREKA: false
           EUREKA_FETCH_REGISTRY: false
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
-          SPRING_DATASOURCE_USERNAME: joao
-          SPRING_DATASOURCE_PASSWORD: joaodev
+          SPRING_DATASOURCE_URL: jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres?user=postgres.imimrmhyyxamkwizvhqq&password=%40jdev123%2Cjoao&prepareThreshold=0
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: "@jdev123,joao"
         run: ./gradlew build
 
       - name: run tenant migrations
         env:
+          PORT: 8089
           APP_RUN_TENANT_MIGRATIONS: true
 
           EUREKA_CLIENT_ENABLED: false
           EUREKA_REGISTER_WITH_EUREKA: false
           EUREKA_FETCH_REGISTRY: false
 
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
-          SPRING_DATASOURCE_USERNAME: joao
-          SPRING_DATASOURCE_PASSWORD: joaodev
+          SPRING_DATASOURCE_URL: jdbc:postgresql://aws-1-sa-east-1.pooler.supabase.com:6543/postgres?user=postgres.imimrmhyyxamkwizvhqq&password=%40jdev123%2Cjoao&prepareThreshold=0
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: "@jdev123,joao"
 
         run: ./gradlew bootrun

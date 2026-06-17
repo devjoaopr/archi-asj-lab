@@ -39,7 +39,7 @@ public class TenantMigrationService {
                 """
                         SELECT schema_name
                         FROM information_schema.schemata
-                        WHERE schema_name NOT IN ('public', 'information_schema', 'pg_catalog', 'pg_toast')
+                        WHERE schema_name NOT IN ('public', 'information_schema', 'pg_catalog', 'pg_toast', 'storage', 'auth', 'graphql_public', 'vault', 'graphql')
                         AND schema_name NOT LIKE 'pg_%'
                         """,
                 String.class
