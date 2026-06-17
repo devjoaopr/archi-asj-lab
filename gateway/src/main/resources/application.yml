@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: ${PORT}
 
 spring:
   application:
@@ -14,8 +14,8 @@ spring:
     loadbalancer:
       eager-load:
         clients:
-          - customer-service
-          - case-service
+          #          - customer-service
+          #          - case-service
           - register-service
 
 logging:
@@ -26,7 +26,7 @@ logging:
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
     register-with-eureka: true
     fetch-registry: true
 
