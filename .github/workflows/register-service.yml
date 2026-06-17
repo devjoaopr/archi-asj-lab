@@ -62,6 +62,7 @@ jobs:
 
       - name: Build gradlew
         env:
+          PORT: 8089
           EUREKA_CLIENT_ENABLED: false
           EUREKA_REGISTER_WITH_EUREKA: false
           EUREKA_FETCH_REGISTRY: false
