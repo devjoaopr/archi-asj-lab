@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.user-service: DEBUG
+
+app:
+  run-tenants-migrations: true
