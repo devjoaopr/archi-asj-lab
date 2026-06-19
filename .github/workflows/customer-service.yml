@@ -1,6 +1,6 @@
 name: develop
 
-concurrency: register
+concurrency: customer
 
 on:
   workflow_dispatch:
@@ -9,17 +9,17 @@ on:
     branches:
       - development
     paths:
-      - 'services/register-service/**'
+      - 'services/customer/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'services/register-service/**'
+      - 'services/customer/**'
 jobs:
   deployment:
     defaults:
       run:
-        working-directory: services/register-service
+        working-directory: services/customer
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -64,18 +64,4 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
           SPRING_DATASOURCE_USERNAME: joao
           SPRING_DATASOURCE_PASSWORD: joaodev
-        run: ./gradlew build
-
-      - name: run tenant migrations
-        env:
-          APP_RUN_TENANT_MIGRATIONS: true
-
-          EUREKA_CLIENT_ENABLED: false
-          EUREKA_REGISTER_WITH_EUREKA: false
-          EUREKA_FETCH_REGISTRY: false
-
-          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/customerdb
-          SPRING_DATASOURCE_USERNAME: joao
-          SPRING_DATASOURCE_PASSWORD: joaodev
-
-        run: ./gradlew bootrun
+        run: ./gradlew build --stacktrace --info
